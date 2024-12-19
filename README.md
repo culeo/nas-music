@@ -51,3 +51,7 @@
 
 # 使用说明
 1. 必须先配置好源，否则无法使用。将第三方 源.js 文件放到 /data/music_source 的目录下。
+
+# Docker 镜像
+
+https://hub.docker.com/r/culeo/nas-music
