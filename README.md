@@ -4,6 +4,8 @@
 
 本项目是一个缝合怪项目，仅供学习和研究使用，不提具体的使用说明，请自行研究。
 
+> 大量代码使用 AI 生成，不喜勿喷。
+
 主要借助以下项目实现：
 - https://github.com/mos9527/pyncm
 - https://github.com/Huibq/keep-alive

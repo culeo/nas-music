@@ -24,7 +24,7 @@ def get_session_file_path():
 
 def get_database_file_path():
     # 定义数据目录
-    file_path = os.path.join(get_data_dir_path(), 'nas-music.db')
+    file_path = os.path.join(get_data_dir_path(), 'nas-music-v2.db')
     # 返回完整的数据库文件路径
     return file_path
 
