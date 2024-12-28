@@ -28,5 +28,7 @@ EXPOSE 8000
 ENV DATA_PATH=/app/data
 ENV DOWNLOAD_PATH=/downloads
 
-# 启动命令
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# 添加可执行权限
+RUN chmod +x ./entrypoint.sh
+
+ENTRYPOINT ["./entrypoint.sh"]
