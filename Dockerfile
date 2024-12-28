@@ -13,7 +13,7 @@ RUN apt-get update && \
 WORKDIR /app
 
 # 复制项目文件到工作目录
-COPY ./package.json ./requirements.txt ./main.py ./entrypoint.sh ./alemb.ini ./
+COPY ./package.json ./requirements.txt ./main.py ./entrypoint.sh ./alembic.ini ./
 COPY ./src ./src
 COPY ./dist ./dist
 COPY ./alembic ./alembic
