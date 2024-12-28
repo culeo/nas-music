@@ -6,8 +6,17 @@ from src.utilities.paths import get_third_plugins_dir_path
 from loguru import logger
 
 class ThirdPlugins:
+    _instance = None  # 存储单例实例
+
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:  # 如果实例不存在，则创建
+            cls._instance = super(ThirdPlugins, cls).__new__(cls, *args, **kwargs)
+        return cls._instance
+    
     def __init__(self):
-        self.plugins = self._load_plugins(get_third_plugins_dir_path())
+        # 确保初始化方法只执行一次
+        if not hasattr(self, "plugins"):  
+            self.plugins = self._load_plugins(get_third_plugins_dir_path())
 
     def _load_plugins(self, plugins_dir):
         plugins = {}

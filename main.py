@@ -21,8 +21,6 @@ async def lifespan(app: FastAPI):
     # 启动异步定时任务
     asyncio.create_task(start_scheduler())
     yield
-    # Shutdown code (if needed)
-    # Add any shutdown logic here
 
 
 app = FastAPI(lifespan=lifespan)
