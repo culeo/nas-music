@@ -13,8 +13,10 @@ RUN apt-get update && \
 WORKDIR /app
 
 # 复制项目文件到工作目录
-COPY ./package.json ./requirements.txt ./main.py ./
-COPY ./src ./src 
+COPY ./package.json ./requirements.txt ./main.py ./entrypoint.sh ./alemb.ini ./
+COPY ./src ./src
+COPY ./dist ./dist
+COPY ./alembic ./alembic
 
 # 安装 Node.js 依赖
 RUN npm install
