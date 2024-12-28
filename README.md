@@ -4,6 +4,7 @@
 
 本项目是一个缝合怪项目，仅供学习和研究使用，不提具体的使用说明，请自行研究。
 
+
 主要借助以下项目实现：
 - https://github.com/mos9527/pyncm
 - https://github.com/Huibq/keep-alive
@@ -50,7 +51,7 @@
 8.1 若你使用了本项目，将代表你接受本协议。
 
 # 使用说明
-1. 必须先配置好源，否则无法使用。将第三方 源.js 文件放到 /data/music_source 的目录下。
+1. 默认账号 admin/admin
 
 # Docker 镜像
 
