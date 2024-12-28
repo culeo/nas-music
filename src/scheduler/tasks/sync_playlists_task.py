@@ -168,7 +168,9 @@ async def download_file(url, file_path):
 
 async def batch_download_ncm_playlists(user_id: int):
     logger.info("开始下载 NCM 歌单")
-
+    if len(third_plugins.plugins) == 0:
+        logger.error("没有可用的插件")
+        return
     with next(get_db()) as db:
         wait_download_songs = song_crud.get_all_wait_download_songs(db = db, user_id=user_id)
         logger.info(f"待下载歌曲数量: {len(wait_download_songs)}")
