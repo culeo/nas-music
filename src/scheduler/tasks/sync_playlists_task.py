@@ -184,7 +184,7 @@ async def batch_download_ncm_playlists(user_id: int):
                 continue
             
             result = sort_by_similar(plugin=plugin, song=song, result=result)
-            all_results.append(result)
+            all_results.extend(result)
             if result[0][2] > 0.95:
                 break
             await random_delay()
