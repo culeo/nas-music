@@ -1,8 +1,6 @@
 import asyncio
-import sys
 from loguru import logger
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from apscheduler.triggers.cron import CronTrigger
 from src.apis.playlist import router as playlist_router 
 from src.apis.user import router as user_router
 from src.apis.third_plugin import router as third_plugin_router

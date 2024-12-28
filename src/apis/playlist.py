@@ -1,7 +1,8 @@
-from fastapi import APIRouter, HTTPException, Query, Depends
-from src.utilities.auth import get_current_user
-from loguru import logger
 import asyncio
+from loguru import logger
+from fastapi import APIRouter, HTTPException, Query, Depends
+from src.utilities.third_plugins import ThirdPlugins
+from src.utilities.auth import get_current_user
 from src.db.session import SessionLocal
 from src.crud.playlist import PlaylistCRUD
 from src.crud.song import SongCRUD
@@ -13,6 +14,7 @@ router = APIRouter()
 playlist_crud = PlaylistCRUD()
 song_crud = SongCRUD()
 user_preference_crud = UserPreferenceCRUD()
+third_plugin = ThirdPlugins()
 
 def get_db():
     db = SessionLocal()
@@ -46,6 +48,11 @@ async def sync_playlists(uid: str = Depends(get_current_user), db: SessionLocal 
         return {
             "code": 9999,
             "message": "没有登录可同步的账号",
+        }
+    if len(third_plugin.plugins) == 0:
+        return {
+            "code": 9999,
+            "message": "没有可用的插件",
         }
     return {
         "code": 0,

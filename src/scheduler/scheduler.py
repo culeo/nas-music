@@ -12,7 +12,6 @@ async def trigger_sync_playlists_task():
         job = scheduler.get_job("sync_playlists")
         if job:
             job.modify(next_run_time=datetime.now())
-            await asyncio.to_thread(scheduler.run_job, job)
     except Exception as e:
         print(f"Error while triggering task: {e}")
 
