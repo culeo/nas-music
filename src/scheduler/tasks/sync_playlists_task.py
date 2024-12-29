@@ -104,42 +104,42 @@ def sort_by_similar(plugin: str, song: SongInDB, result: list):
     return matches
 
 async def download_song_from_plugin(result: list) -> str | None:
-    for plugin, item, similarity in result:
-        logger.info(f"插件 {plugin} 匹配度 {similarity:.2f}: {item}")
+    plugin, item, similarity = result
+    logger.info(f"插件 {plugin} 匹配度 {similarity:.2f}: {item}")
 
-        # 获取媒体资源连接
-        media_source = await third_plugins.get_media_source(
-            item, "super", plugin=plugin
+    # 获取媒体资源连接
+    media_source = await third_plugins.get_media_source(
+        item, "super", plugin=plugin
+    )
+    logger.debug(f"媒体资源: {media_source}")
+    
+    media_url = media_source.get("url", "")
+    if len(media_url) > 0:
+        # 下载文件
+        file_path = os.path.join(
+            get_download_dir_path(),
+            f"{item['title']}-{item['artist']}.mp3",
         )
-        logger.debug(f"媒体资源: {media_source}")
-        
-        media_url = media_source.get("url", "")
-        if len(media_url) > 0:
-            # 下载文件
-            file_path = os.path.join(
+        is_success = await download_file(media_url, file_path)
+        if is_success:
+            # 调用封装的元数据写入方法
+            write_metadata(file_path, item)
+
+            # 获取歌词
+            lyric_path = os.path.join(
                 get_download_dir_path(),
-                f"{item['title']}-{item['artist']}.mp3",
+                f"{item['title']}-{item['artist']}.lrc",
             )
-            is_success = await download_file(media_url, file_path)
-            if is_success:
-                # 调用封装的元数据写入方法
-                write_metadata(file_path, item)
+            lyric_data = (
+                (await third_plugins.get_lyric(item, plugin=plugin))
+                .get("rawLrc", "")
+            )
+            with open(lyric_path, "w", encoding="utf-8") as f:
+                f.write(lyric_data)
 
-                # 获取歌词
-                lyric_path = os.path.join(
-                    get_download_dir_path(),
-                    f"{item['title']}-{item['artist']}.lrc",
-                )
-                lyric_data = (
-                    (await third_plugins.get_lyric(item, plugin=plugin))
-                    .get("rawLrc", "")
-                )
-                with open(lyric_path, "w", encoding="utf-8") as f:
-                    f.write(lyric_data)
-
-                return file_path
-            else:
-                logger.warning(f"下载失败: {item}")
+            return file_path
+        else:
+            logger.warning(f"下载失败: {item}")
 
     return None  # 如果所有尝试都失败，返回 None
 
